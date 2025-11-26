@@ -6,7 +6,7 @@
 #    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/26 12:16:12 by joesanto          #+#    #+#              #
-#    Updated: 2025/11/26 12:37:45 by joesanto         ###   ########.fr        #
+#    Updated: 2025/11/26 20:25:00 by joesanto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,12 +15,19 @@ CC = cc
 FLAGS = -Wall -Wextra -Werror -g
 
 SRCS_DIR = srcs
+
+EXEC_DIR = $(SRCS_DIR)/exec
+EXEC = $(addprefix $(EXEC_DIR)/, execve_pipe.c)
+
 MAIN = $(addprefix $(SRCS_DIR)/, main.c)
 
-OBJS = $(MAIN:.c=.o)
+HEADERS_DIR = includes
+HEADERS = $(addprefix $(HEADERS_DIR)/, pipex.h)
+
+OBJS = $(MAIN:.c=.o) $(EXEC:.c=.o)
 LIBS_DIR = libs
 LIBFT = $(LIBS_DIR)/libft/libft.a
-INCLUDES = $(addprefix -I, $(LIBS_DIR)/libft)
+INCLUDES = $(addprefix -I, $(LIBS_DIR)/libft $(HEADERS_DIR))
 
 all: $(NAME)
 
