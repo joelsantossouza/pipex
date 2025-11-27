@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 12:23:39 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/26 22:49:37 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/27 14:09:21 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,42 +15,49 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	if (argc < 5)
-	{
-		ft_fprintf(2, "Usage: %s <file1> <cmd1> <cmd2> <file2>\n", *argv);
+	//if (argc < 5)
+	//{
+	//	ft_fprintf(2, "Usage: %s <file1> <cmd1> <cmd2> <file2>\n", *argv);
+	//	return (1);
+	//}
+	if (argc < 3)
 		return (1);
-	}
 
+	#include <stdlib.h>
 	#include <unistd.h>
 	#include <sys/wait.h>
-	#include <fcntl.h>
-	int fd[2];
+	int fd1[2];
+	int fd2[2];
 
-	if (pipe(fd) < 0)
+	if (pipe(fd1) < 0)
 		return (1);
-	char *argv1[2] = {*(argv + 2), 0};
-	t_cmd	cmd1 = {
-		argv[2],
-		argv1,
-		envp,
+	if (pipe(fd2) < 0)
+		return (1);
+	argv++;
+	t_cmd	cmd = {
+		*argv,
+		(char *[]){*argv, NULL},
 	};
-	char *argv2[2] = {*(argv + 3), 0};
-	t_cmd	cmd2 = {
-		argv[3],
-		argv2,
-		envp,
+	int pid1 = execve_pipe(&cmd, envp, 0, fd1[1]);
+	argv++;
+	cmd = (t_cmd){
+		*argv,
+		(char *[]){*argv, NULL},
 	};
-	int	pid1;
-	int	pid2;
-	int file1 = open(argv[1], O_RDONLY);
-	int file2 = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0666);
-	pid1 = execve_pipe(&cmd1, file1, fd[1]);
-	close(fd[1]);
-	pid2 = execve_pipe(&cmd2, fd[0], file2);
-	close(fd[0]);
+	close(fd1[1]);
+	int pid2 = execve_pipe(&cmd, envp, fd1[0], fd2[1]);
+	close(fd1[0]);
+	argv++;
+	cmd = (t_cmd){
+		*argv,
+		(char *[]){*argv, NULL},
+	};
+	close(fd2[1]);
+	int pid3 = execve_pipe(&cmd, envp, fd2[0], 1);
+	close(fd2[0]);
 
 	waitpid(pid1, 0, 0);
 	waitpid(pid2, 0, 0);
-
+	waitpid(pid3, 0, 0);
 	return (0);
 }
