@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 18:38:17 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/27 23:01:59 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/27 23:16:57 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	get_cmd(t_cmd *cmd, char *pcmd, char **envp)
 {
 	const char	*paths = ft_strchr(get_path(envp), '=');
 
+	free_cmd(cmd);
 	cmd->argv = ft_split(pcmd, ' ');
 	if (!cmd->argv)
 		return (-1);
