@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 18:38:17 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/27 20:46:10 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/27 23:01:59 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*get_cmd_path(char *pcmd, char *paths)
 	char	*path;
 	size_t	len;
 
-	if (access(pcmd, X_OK) == 0)
+	if (ft_strchr(pcmd, '/') && access(pcmd, X_OK) == 0)
 		return (ft_strdup(pcmd));
 	if (!paths)
 		return (0);
