@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 18:38:17 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/28 12:13:58 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/28 12:22:26 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	get_cmd_path(char **cmd_path, char *cmd, char *paths)
 			return (FOUND);
 		free(*cmd_path);
 	}
+	*cmd_path = 0;
 	return (NOT_FOUND);
 }
 
