@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 18:38:17 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/27 23:16:57 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/28 10:41:43 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,6 @@ char	*get_cmd_path(char *pcmd, char *paths)
 	char	*path;
 	size_t	len;
 
-	if (ft_strchr(pcmd, '/') && access(pcmd, X_OK) == 0)
-		return (ft_strdup(pcmd));
-	if (!paths)
-		return (0);
 	while (*paths)
 	{
 		path = paths + (*paths == ':');
@@ -66,8 +62,12 @@ int	get_cmd(t_cmd *cmd, char *pcmd, char **envp)
 	cmd->argv = ft_split(pcmd, ' ');
 	if (!cmd->argv)
 		return (-1);
-	cmd->path = get_cmd_path(cmd->argv[0], (char *)++paths);
+	cmd->path = 0;
+	if (ft_strchr(pcmd, '/') && access(pcmd, X_OK) == 0)
+		cmd->path = ft_strdup(pcmd);
+	else if (paths)
+		cmd->path = get_cmd_path(cmd->argv[0], (char *)++paths);
 	if (!cmd->path)
-		return (-1);
+		return (ft_freearray((void **)cmd->argv, free), -1);
 	return (0);
 }

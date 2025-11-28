@@ -6,14 +6,14 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 20:13:03 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/27 21:00:48 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/28 10:31:04 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
-#define PIPEX_H
+# define PIPEX_H
 
-#include <stddef.h>
+# include <stddef.h>
 
 typedef struct s_cmd
 {
