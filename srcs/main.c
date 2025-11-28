@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 12:23:39 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/28 10:17:32 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/28 11:36:24 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ int	main(int argc, char **argv, char **envp)
 	file2 = open(argv[argc - 1], O_WRONLY | O_CREAT, 0666);
 	if (file2 < 0)
 		return (close(file1), 3);
-	exec_pipe_chain(argc - 1, argv + 1, envp, (int [2]){file1, file2});
+	exec_pipe_chain(argc - 3, argv + 2, envp, (int [2]){file1, file2});
 	return (close(file1), close(file2), 0);
 }
