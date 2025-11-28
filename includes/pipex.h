@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 20:13:03 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/28 10:31:04 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/28 12:17:22 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define PIPEX_H
 
 # include <stddef.h>
+
+# define FOUND		1
+# define NOT_FOUND	0
 
 typedef struct s_cmd
 {

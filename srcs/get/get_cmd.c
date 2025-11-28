@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 18:38:17 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/28 11:28:38 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/28 12:13:58 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,9 @@ char	*get_path(char **envp)
 }
 
 static inline
-char	*get_cmd_path(char *pcmd, char *paths)
+int	get_cmd_path(char **cmd_path, char *cmd, char *paths)
 {
 	char	*start;
-	char	*cmd_path;
 	size_t	len;
 
 	while (*paths)
@@ -41,34 +40,42 @@ char	*get_cmd_path(char *pcmd, char *paths)
 		len = paths - start;
 		if (len <= 0)
 			continue ;
-		cmd_path = malloc(sizeof(char) * (len + 2));
-		if (!cmd_path)
-			return (0);
-		*(char *)ft_mempcpy(cmd_path, start, len) = '/';
-		cmd_path[len + 1] = 0;
-		cmd_path = ft_strjoin(cmd_path, pcmd, free, 0);
-		if (!cmd_path)
-			return (0);
-		if (access(cmd_path, X_OK) == 0)
-			return (cmd_path);
-		free(cmd_path);
+		*cmd_path = malloc(sizeof(char) * (len + 2));
+		if (!*cmd_path)
+			return (-1);
+		*(char *)ft_mempcpy(*cmd_path, start, len) = '/';
+		(*cmd_path)[len + 1] = 0;
+		*cmd_path = ft_strjoin(*cmd_path, cmd, free, 0);
+		if (!*cmd_path)
+			return (-1);
+		if (access(*cmd_path, X_OK) == 0)
+			return (FOUND);
+		free(*cmd_path);
 	}
-	return (0);
+	return (NOT_FOUND);
 }
 
 int	get_cmd(t_cmd *cmd, char *pcmd, char **envp)
 {
 	const char	*paths = ft_strchr(get_path(envp), '=');
+	int			was_found;
 
+	was_found = FOUND;
 	free_cmd(cmd);
 	cmd->argv = ft_split(pcmd, ' ');
 	if (!cmd->argv)
 		return (-1);
 	if (ft_strchr(pcmd, '/') && access(pcmd, X_OK) == 0)
+	{
 		cmd->path = ft_strdup(pcmd);
+		if (!cmd->path)
+			return (free_cmd(cmd), -1);
+	}
 	else if (paths)
-		cmd->path = get_cmd_path(cmd->argv[0], (char *)++paths);
-	if (!cmd->path)
-		return (free_cmd(cmd), -1);
-	return (0);
+	{
+		was_found = get_cmd_path(&cmd->path, cmd->argv[0], (char *)++paths);
+		if (was_found < 0)
+			return (free_cmd(cmd), -1);
+	}
+	return (was_found);
 }
