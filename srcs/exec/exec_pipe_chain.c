@@ -6,12 +6,13 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:10:00 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/27 23:14:14 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/28 09:52:44 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 #include <unistd.h>
+#include <sys/wait.h>
 
 int	exec_pipe_chain(size_t size, char **cmds, char **envp, int end[2])
 {
@@ -38,6 +39,7 @@ int	exec_pipe_chain(size_t size, char **cmds, char **envp, int end[2])
 	if (get_cmd(&cmd, *cmds, envp) < 0 || execve_pipe(&cmd, envp, fd[0], end[1]) < 0)
 		return (close(fd[0]), free_cmd(&cmd), -1);
 	close(fd[0]);
-	free_cmd(&cmd);
-	return (0);
+	while (wait(NULL) > 0)
+		;
+	return (free_cmd(&cmd), 0);
 }
