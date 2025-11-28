@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 18:38:17 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/28 12:22:26 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/28 16:04:50 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,23 +49,21 @@ int	get_cmd_path(char **cmd_path, char *cmd, char *paths)
 		if (!*cmd_path)
 			return (-1);
 		if (access(*cmd_path, X_OK) == 0)
-			return (FOUND);
+			return (0);
 		free(*cmd_path);
 	}
 	*cmd_path = 0;
-	return (NOT_FOUND);
+	return (0);
 }
 
 int	get_cmd(t_cmd *cmd, char *pcmd, char **envp)
 {
 	const char	*paths = ft_strchr(get_path(envp), '=');
-	int			was_found;
 
-	was_found = FOUND;
-	free_cmd(cmd);
 	cmd->argv = ft_split(pcmd, ' ');
 	if (!cmd->argv)
 		return (-1);
+	cmd->path = 0;
 	if (ft_strchr(pcmd, '/') && access(pcmd, X_OK) == 0)
 	{
 		cmd->path = ft_strdup(pcmd);
@@ -74,9 +72,8 @@ int	get_cmd(t_cmd *cmd, char *pcmd, char **envp)
 	}
 	else if (paths)
 	{
-		was_found = get_cmd_path(&cmd->path, cmd->argv[0], (char *)++paths);
-		if (was_found < 0)
+		if (get_cmd_path(&cmd->path, cmd->argv[0], (char *)++paths) < 0)
 			return (free_cmd(cmd), -1);
 	}
-	return (was_found);
+	return (0);
 }
