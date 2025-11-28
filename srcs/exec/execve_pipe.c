@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 20:06:54 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/28 12:17:10 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/28 12:32:45 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	execve_pipe(t_cmd *cmd, char **envp, int read_end, int write_end)
 	int	pid;
 
 	if (!cmd->path)
-		return (NOT_FOUND);
+		return (NOT_FOUND); // FOR SOME REASOM WHEN HAS AN INVALID COMMAND BETWEEN CMDS, THE PIPE CONTINUE TO THE VALID ONE, BUT SHOULD GIVE NOTHING AS OUTPUT
 	pid = fork();
 	if (pid < 0)
 		return (-1);
