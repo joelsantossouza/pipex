@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:10:00 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/28 16:23:48 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/29 12:30:29 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
 
 int	exec_pipe_chain(size_t size, char **cmds, char **envp, int end[2])
 {
-	int		fd[2];
+	int	fd[2];
 
 	if (pipe(fd) < 0)
 		return (-1);
-	if (exec_pipe(*cmds++, envp, end[0], fd[1]) < 0)
-		return (close_pipe(fd[0], fd[1]), -1);
+	if (exec_pipe(*cmds++, envp, end, fd) < 0)
+		return (close_pipe(fd), -1);
 	size -= 2;
 	while (size-- && *cmds)
 	{
@@ -29,12 +29,12 @@ int	exec_pipe_chain(size_t size, char **cmds, char **envp, int end[2])
 		close(fd[1]);
 		if (pipe(fd) < 0)
 			return (close(end[0]), -1);
-		if (exec_pipe(*cmds++, envp, end[0], fd[1]) < 0)
-			return (close(end[0]), close_pipe(fd[0], fd[1]), -1);
-		close(end[0]);
+		if (exec_pipe(*cmds++, envp, end, fd) < 0)
+			return (close(end[0]), close_pipe(fd), -1);
+		safe_close(&end[0]);
 	}
-	close(fd[1]);
-	if (exec_pipe(*cmds, envp, fd[0], end[1]) < 0)
+	safe_close(&fd[1]);
+	if (exec_pipe(*cmds, envp, fd, end) < 0)
 		return (close(fd[0]), -1);
 	close(fd[0]);
 	while (wait(NULL) > 0)

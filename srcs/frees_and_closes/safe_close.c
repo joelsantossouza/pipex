@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   close_pipe.c                                       :+:      :+:    :+:   */
+/*   safe_close.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/27 20:53:23 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/29 12:25:19 by joesanto         ###   ########.fr       */
+/*   Created: 2025/11/29 12:25:57 by joesanto          #+#    #+#             */
+/*   Updated: 2025/11/29 12:27:03 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 
-int	close_pipe(int fd[2])
+int	safe_close(int *fd)
 {
-	const int	read_end = fd[0];
-	const int	write_end = fd[1];
-	int			ret;
+	int	ret;
 
 	ret = 0;
-	if (read_end != -1 && read_end != STDIN_FILENO)
-		ret = close(read_end);
-	if (write_end != -1 && write_end != STDOUT_FILENO && close(write_end) < 0)
-		return (-1);
+	if (*fd != -1)
+	{
+		ret = close(*fd);
+		*fd = -1;
+	}
 	return (ret);
 }

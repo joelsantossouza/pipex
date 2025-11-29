@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 20:06:54 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/28 16:11:24 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/29 12:12:08 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-int	exec_pipe(char *pcmd, char **envp, int read_end, int write_end)
+int	exec_pipe(char *pcmd, char **envp, int pipe1[2], int pipe2[2])
 {
 	t_cmd	cmd;
 	int		pid;
@@ -28,14 +28,12 @@ int	exec_pipe(char *pcmd, char **envp, int read_end, int write_end)
 		return (free_cmd(&cmd), -1);
 	if (pid != 0)
 		return (free_cmd(&cmd), pid);
-	if (dup2(read_end, STDIN_FILENO) < 0)
+	if (dup2(pipe1[0], STDIN_FILENO) < 0)
 		(free_cmd(&cmd), exit(-1));
-	if (dup2(write_end, STDOUT_FILENO) < 0)
+	if (dup2(pipe2[1], STDOUT_FILENO) < 0)
 		(free_cmd(&cmd), exit(-1)); // FD LEAK --> PREVIOUT DUP2 WORK CORRECTLY!
-	if (read_end != STDIN_FILENO)
-		close(read_end);
-	if (write_end != STDOUT_FILENO)
-		close(write_end);
+	close_pipe(pipe1);
+	close_pipe(pipe2);
 	execve(cmd.path, cmd.argv, envp);
 	(free_cmd(&cmd), exit(-1));
 }

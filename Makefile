@@ -6,7 +6,7 @@
 #    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/26 12:16:12 by joesanto          #+#    #+#              #
-#    Updated: 2025/11/28 16:27:50 by joesanto         ###   ########.fr        #
+#    Updated: 2025/11/29 12:31:26 by joesanto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ GET_DIR = $(SRCS_DIR)/get
 GET = $(addprefix $(GET_DIR)/, get_cmd.c)
 
 FREES_AND_CLOSES_DIR = $(SRCS_DIR)/frees_and_closes
-FREES_AND_CLOSES = $(addprefix $(FREES_AND_CLOSES_DIR)/, free_cmd.c close_pipe.c)
+FREES_AND_CLOSES = $(addprefix $(FREES_AND_CLOSES_DIR)/, free_cmd.c close_pipe.c \
+				   safe_close.c)
 
 MAIN = $(addprefix $(SRCS_DIR)/, main.c)
 
