@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 18:38:17 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/28 21:28:37 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/29 13:43:20 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,13 @@ int	get_cmd_path(char **cmd_path, char *cmd, char *paths)
 	}
 	*cmd_path = 0;
 	return (0);
+}
+
+int	cmd_not_found(const char *pcmd)
+{
+	ft_putstr_fd(pcmd, STDERR_FILENO);
+	ft_putstr_fd(": command not found\n", STDERR_FILENO);
+	return (-1);
 }
 
 int	get_cmd(t_cmd *cmd, char *pcmd, char **envp)
