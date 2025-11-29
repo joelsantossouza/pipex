@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 12:23:39 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/28 11:36:24 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/29 16:36:50 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,5 @@ int	main(int argc, char **argv, char **envp)
 	if (file2 < 0)
 		return (close(file1), 3);
 	exec_pipe_chain(argc - 3, argv + 2, envp, (int [2]){file1, file2});
-	return (close(file1), close(file2), 0);
+	return (0);
 }
