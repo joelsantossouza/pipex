@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 12:23:39 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/29 20:42:20 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/29 20:52:07 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "pipex.h"
 #include <unistd.h>
 #include <fcntl.h>
+#include <stdio.h>
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -26,6 +27,8 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	}
 	file1 = open(argv[1], O_RDONLY);
+	if (file1 < 0)
+		perror(argv[1]);
 	file2 = open(argv[argc - 1], O_WRONLY | O_CREAT, 0666);
 	if (file2 < 0)
 		return (close(file1), 3);
