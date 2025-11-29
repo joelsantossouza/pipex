@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 12:25:57 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/29 12:27:03 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/29 19:05:21 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	safe_close(int *fd)
 	int	ret;
 
 	ret = 0;
-	if (*fd != -1)
+	if (*fd > 2)
 	{
 		ret = close(*fd);
 		*fd = -1;
