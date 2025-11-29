@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:10:00 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/29 17:30:30 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/29 18:01:53 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	last_cmd_status(int last_cmd_pid)
 	waitpid(last_cmd_pid, &status, 0);
 	while (wait(NULL) > 0)
 		;
-	return (status);
+	return (WEXITSTATUS(status));
 }
 
 int	exec_pipe_chain(size_t size, char **cmds, char **envp, int end[2])
