@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 12:23:39 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/29 21:32:37 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/29 21:42:04 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ int	main(int argc, char **argv, char **envp)
 		(write(STDERR_FILENO, "pipex: ", 7), perror(argv[1]));
 	file2 = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	if (file2 < 0)
-		return (close(file1), 2);
+		return (write(STDERR_FILENO, "pipex: ", 7), perror(argv[argc - 1]), close(file1), 2);
 	return (exec_pipe_chain(argc - 3, argv + 2, envp, (int [2]){file1, file2}));
 }
