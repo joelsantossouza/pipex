@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 18:38:17 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/29 13:43:20 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/29 18:25:18 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	get_cmd_path(char **cmd_path, char *cmd, char *paths)
 int	cmd_not_found(const char *pcmd)
 {
 	ft_putstr_fd(pcmd, STDERR_FILENO);
-	ft_putstr_fd(": command not found\n", STDERR_FILENO);
+	write(STDERR_FILENO, ": command not found\n", 20);
 	return (-1);
 }
 
