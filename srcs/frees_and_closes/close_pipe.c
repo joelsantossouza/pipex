@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 20:53:23 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/29 12:25:19 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/29 20:39:45 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ int	close_pipe(int fd[2])
 	int			ret;
 
 	ret = 0;
-	if (read_end != -1 && read_end != STDIN_FILENO)
+	if (read_end > 2)
 		ret = close(read_end);
-	if (write_end != -1 && write_end != STDOUT_FILENO && close(write_end) < 0)
+	if (write_end > 2 && close(write_end) < 0)
 		return (-1);
 	return (ret);
 }

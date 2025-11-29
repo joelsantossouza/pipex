@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 20:06:54 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/29 17:09:40 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/29 20:37:13 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	exec_pipe(char *pcmd, char **envp, int pipe1[2], int pipe2[2])
 		return (perror("fork"), -1);
 	if (pid != 0)
 		return (pid);
+	if (pipe1[0] == -1)
+		(close_pipe(pipe1), close_pipe(pipe2), exit(1));
 	if (get_cmd(&cmd, pcmd, envp) < 0)
 		(perror("get_cmd"), close_pipe(pipe1), close_pipe(pipe2), exit(1));
 	if (!cmd.path)
