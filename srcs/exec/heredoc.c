@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 11:37:17 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/30 13:20:22 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/30 18:16:31 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ int	heredoc(const char *delim)
 		len = ft_getline(&line, STDIN_FILENO);
 		if (len < 0)
 			return (perror("ft_getline"), close_pipe(fd), -1);
-		if (!line || (!ft_strncmp(line, delim, delim_len) && line[delim_len] == '\n'))
+		if (line[len - (len != 0)] != '\n' && write(STDOUT_FILENO, "\n", 1) < 0)
+			return (perror("write"), close_pipe(fd), free(line), -1);
+		if (!line || (!ft_strncmp(line, delim, delim_len) && (line[delim_len] == '\n' || !line[delim_len])))
 			break ;
 		if (write(fd[1], line, len) < 0)
 			return (perror("write"), close_pipe(fd), free(line), -1);
