@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 12:23:39 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/30 14:01:45 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/30 17:32:37 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,16 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	int	file1;
-	int	file2;
+	const int	is_heredoc = ft_strcmp(argv[1], "here_doc") == 0;
+	int			file1;
+	int			file2;
 
-	if (argc < 6)
+	if (argc < 5 + is_heredoc)
 	{
 		ft_fprintf(STDERR_FILENO, "Usage: %s <file1 | here_doc DELIM> <cmd1> <cmd2> [cmd...] <file2>\n", *argv);
 		return (1);
 	}
-	if (ft_strcmp(argv[1], "here_doc") != 0)
+	if (!is_heredoc)
 	{
 		file1 = open(argv[1], O_RDONLY);
 		if (file1 < 0)
