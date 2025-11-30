@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 12:23:39 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/29 21:42:04 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/30 10:56:51 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int argc, char **argv, char **envp)
 
 	if (argc < 5)
 	{
-		ft_fprintf(2, "Usage: %s <file1> <cmd1> <cmd2> [cmd...] <file2>\n", *argv);
+		ft_fprintf(STDERR_FILENO, "Usage: %s <file1> <cmd1> <cmd2> [cmd...] <file2>\n", *argv);
 		return (1);
 	}
 	file1 = open(argv[1], O_RDONLY);
