@@ -6,7 +6,7 @@
 #    By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/26 12:16:12 by joesanto          #+#    #+#              #
-#    Updated: 2025/11/29 12:31:26 by joesanto         ###   ########.fr        #
+#    Updated: 2025/11/30 12:24:27 by joesanto         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ FLAGS = -Wall -Wextra -Werror -g
 SRCS_DIR = srcs
 
 EXEC_DIR = $(SRCS_DIR)/exec
-EXEC = $(addprefix $(EXEC_DIR)/, exec_pipe.c exec_pipe_chain.c)
+EXEC = $(addprefix $(EXEC_DIR)/, exec_pipe.c exec_pipe_chain.c heredoc.c)
 
 GET_DIR = $(SRCS_DIR)/get
 GET = $(addprefix $(GET_DIR)/, get_cmd.c)
