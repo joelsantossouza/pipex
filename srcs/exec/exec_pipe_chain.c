@@ -6,13 +6,14 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 15:10:00 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/29 19:03:23 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/30 12:11:28 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 #include <unistd.h>
 #include <sys/wait.h>
+#include <stdio.h>
 
 static inline
 int	last_cmd_status(int last_cmd_pid)
@@ -31,7 +32,7 @@ int	exec_pipe_chain(size_t size, char **cmds, char **envp, int end[2])
 	int	last_cmd_pid;
 
 	if (pipe(fd) < 0)
-		return (-1);
+		return (perror("pipe"), -1);
 	if (exec_pipe(*cmds++, envp, end, fd) < 0)
 		return (close_pipe(end), close_pipe(fd), -1);
 	safe_close(&end[0]);
@@ -40,7 +41,7 @@ int	exec_pipe_chain(size_t size, char **cmds, char **envp, int end[2])
 	{
 		end[0] = fd[0];
 		if (pipe(fd) < 0)
-			return (close_pipe(end), -1);
+			return (perror("pipe"), close_pipe(end), -1);
 		if (exec_pipe(*cmds++, envp, end, fd) < 0)
 			return (close_pipe(end), close_pipe(fd), -1);
 		close(end[0]);

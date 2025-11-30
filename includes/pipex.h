@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 20:13:03 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/29 13:43:53 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/30 12:14:47 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct s_cmd
 // EXEC
 int		exec_pipe(char *pcmd, char **envp, int pipe1[2], int pipe2[2]);
 int		exec_pipe_chain(size_t size, char **cmds, char **envp, int end[2]);
+int		heredoc(const char *delim);
 
 // GET
 int		cmd_not_found(const char *pcmd);
