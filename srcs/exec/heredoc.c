@@ -6,7 +6,7 @@
 /*   By: joesanto <joesanto@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 11:37:17 by joesanto          #+#    #+#             */
-/*   Updated: 2025/11/30 12:22:44 by joesanto         ###   ########.fr       */
+/*   Updated: 2025/11/30 12:52:36 by joesanto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@
 
 int	heredoc(const char *delim)
 {
-	int		fd[2];
-	char	*line;
-	ssize_t	len;
+	const int	delim_len = ft_strlen(delim);
+	int			fd[2];
+	char		*line;
+	ssize_t		len;
 
 	if (pipe(fd) < 0)
 		return (perror("pipe"), -1);
@@ -34,7 +35,7 @@ int	heredoc(const char *delim)
 			return (perror("ft_getline"), close_pipe(fd), -1);
 		if (write(fd[1], line, len) < 0)
 			return (perror("write"), close_pipe(fd), free(line), -1);
-		if (!line || ft_strcmp(line, delim) == 0)
+		if (!line || (!ft_strncmp(line, delim, delim_len) && line[delim_len] == '\n'))
 			break ;
 	}
 	return (close(fd[1]), free(line), fd[0]);
