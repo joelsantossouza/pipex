@@ -10,6 +10,8 @@
 
 Pipex is a system programming project that recreates Unix pipeline behavior from scratch. It demonstrates fundamental concepts in interprocess communication (IPC), file descriptor manipulation, and process management by implementing a command chaining mechanism similar to shell pipelines.
 
+https://github.com/user-attachments/assets/6652888e-ace7-4d30-91da-1c4497317778
+
 ### Key Features
 
 - Multi-command pipeline execution
